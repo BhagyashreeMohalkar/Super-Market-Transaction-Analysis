@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Results</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container fade-in">
+
+    <h1><i class="fa-solid fa-chart-line"></i> Analysis Results</h1>
+
+    <div class="card stats">
+        <div>
+            <i class="fa-solid fa-microchip"></i>
+            <p>Algorithm</p>
+            <h3>{{ algorithm }}</h3>
+        </div>
+        <div>
+            <i class="fa-solid fa-clock"></i>
+            <p>Execution Time</p>
+            <h3>{{ exec_time }} sec</h3>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-link"></i> Top 10 Association Rules</h2>
+        {% for table in tables %}
+            {{ table|safe }}
+        {% endfor %}
+    </div>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-lightbulb"></i> Recommended Bundles</h2>
+        <ul>
+            {% for rec in recommendations %}
+                <li>{{ rec }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-chart-bar"></i> Rule Lift Chart</h2>
+        <div class="chart-container">
+            <canvas id="ruleChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-gauge-high"></i> Execution Time Comparison</h2>
+        <div class="chart-container">
+            <canvas id="timeChart"></canvas>
+        </div>
+    </div>
+
+    <a href="/" class="back-btn">⬅ Back</a>
+
+</div>
+
+<!-- Hidden Data Container -->
+<div id="chart-data"
+     data-labels='{{ rule_labels | tojson }}'
+     data-lifts='{{ rule_lifts | tojson }}'
+     data-apriori='{{ apriori_time }}'
+     data-fpgrowth='{{ fpgrowth_time }}'>
+</div>
+
+<script>
+    const chartData = document.getElementById("chart-data");
+
+    const ruleLabels = JSON.parse(chartData.dataset.labels);
+    const ruleLifts = JSON.parse(chartData.dataset.lifts);
+    const aprioriTime = parseFloat(chartData.dataset.apriori);
+    const fpgrowthTime = parseFloat(chartData.dataset.fpgrowth);
+
+    new Chart(document.getElementById('ruleChart'), {
+        type: 'bar',
+        data: {
+            labels: ruleLabels,
+            datasets: [{
+                label: 'Lift',
+                data: ruleLifts,
+                backgroundColor: '#2c5364'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    new Chart(document.getElementById('timeChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Apriori', 'FP-Growth'],
+            datasets: [{
+                label: 'Execution Time (sec)',
+                data: [aprioriTime, fpgrowthTime],
+                backgroundColor: ['#203a43', '#00d4ff']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
+</body>
+</html>

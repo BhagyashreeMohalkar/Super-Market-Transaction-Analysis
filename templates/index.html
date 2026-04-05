@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supermarket Analytics Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container fade-in">
+
+    <h1><i class="fa-solid fa-cart-shopping"></i> Supermarket Analytics Dashboard</h1>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-fire"></i> Top 20 Frequently Bought Products</h2>
+        {{ top_products|safe }}
+    </div>
+
+    <div class="card">
+        <h2><i class="fa-solid fa-chart-line"></i> Run Association Analysis</h2>
+
+        <form id="analysisForm" action="/run" method="post">
+            <select name="algorithm">
+                <option value="apriori">Apriori</option>
+                <option value="fpgrowth">FP-Growth</option>
+            </select>
+            <button type="submit">Run Analysis</button>
+        </form>
+    </div>
+
+</div>
+
+<div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+</div>
+
+<script>
+    document.getElementById("analysisForm").addEventListener("submit", function() {
+        document.getElementById("loader").classList.remove("hidden");
+    });
+</script>
+
+</body>
+</html>

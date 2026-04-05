@@ -50,23 +50,28 @@ Supermarket-Market-Basket/
 │
 ├── data/
 │   └── raw/
-│       ├── order_products__prior.csv   # Transaction records
-│       └── products.csv                # Product data
+│       ├── order_products__prior.csv   
+│       └── products.csv               
 │
 ├── models/
-│   ├── preprocessing.py               # Data preprocessing
-│   ├── apriori_model.py               # Apriori algorithm
-│   └── fpgrowth_model.py              # FP-Growth algorithm
+│   ├── preprocessing.py               
+│   ├── apriori_model.py               
+│   └── fpgrowth_model.py              
 │
 ├── templates/
-│   ├── index.html                     # Home dashboard
-│   └── results.html                   # Results page
+│   ├── index.html                     
+│   └── results.html                   
 │
 ├── static/
 │   └── css/
-│       └── style.css                  # Styling
+│       └── style.css                  
 │
-├── app.py                             # Flask app
+├── Screenshots/
+│   ├── Image1.png
+│   ├── Apriori.png  
+│   └── FPgrowth.png
+│
+├── app.py                             
 └── requirements.txt
 
 ```
@@ -153,6 +158,21 @@ flowchart TD
 
 ---
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="Screenshots/Image1.png" alt="Home Dashboard" width="800"/>
+</p>
+
+<p align="center">
+  <img src="Screenshots/Apriori.png" alt="Home Dashboard" width="800"/>
+</p>
+
+<p align="center">
+  <img src="Screenshots/FPgrowth.png" alt="Home Dashboard" width="800"/>
+</p>
+
+---
 ## 📦 Dataset
 
 This project uses the [Instacart Online Grocery Dataset](https://www.kaggle.com/c/instacart-market-basket-analysis/data).
